@@ -1,0 +1,27 @@
+.navbar_parent_holder{
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar_holder_left{
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+    padding-left: 2px;
+    font-weight: bold;
+    font-size: 23px;
+    cursor: pointer;
+}
+.navbar_holder_left div{
+    color: blue;
+}
+
+.navbar_holder_right{
+    display: flex;
+    align-items: center;
+}   
+.navbar_holder_right button{
+    font-size: 15px;
+}
