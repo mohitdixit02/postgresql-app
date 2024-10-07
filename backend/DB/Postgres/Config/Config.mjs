@@ -14,6 +14,9 @@ const Postgres = {
         dialect: process.env.DB_DIALECT,
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
+
+        // for dev only
+        logging: false
     },
     client : null
 }

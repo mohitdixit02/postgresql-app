@@ -1,0 +1,61 @@
+.job_manager_parent_holder{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.job_manager_parent{
+    width: 70%;
+    text-align: center;
+    margin: 25px 0 60px 0;
+}
+
+/* form */
+.job_manager_form_holder{
+    width: 100%;
+    background-color: aliceblue;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 15px;
+    border-radius: 8px;
+}
+.job_manager_form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* job list */
+.job_list_container_top{
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.job_list_data{
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+/* item */
+.job_list_data_item{
+    display: flex;
+    justify-content: space-between;
+    background-color: aliceblue;
+    padding: 12px;
+    border-radius: 6px;
+}
+.job_list_data_item_left{
+    text-align: left;
+}
+.job_list_data_item_right{
+    text-align: right;
+}
+.job_list_item_button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}

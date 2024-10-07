@@ -1,5 +1,5 @@
 import express from 'express';
-import UserViews from "./Views/Users/UserView.mjs";
+import routes from "./routes/index.mjs";
 const app = express();
 const port = 3000;
 
@@ -10,13 +10,10 @@ app.use(express.json());
 import connectDB, {Postgres} from './DB/Postgres/Config/Config.mjs';
 Postgres.client = connectDB();
 
-app.use('/users', UserViews);
+// routes
+app.use('/', routes);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-})
-
-
+// starting server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 }); 
