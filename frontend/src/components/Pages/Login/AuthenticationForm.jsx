@@ -1,8 +1,8 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 import { Modal, Tabs, Button, Form, Input } from 'antd';
-// import { LoginAPI ,SigninAPI } from '../Utility/Authentication/Authentication';
 import { useNotification } from '../../Notifications/Notifications';
+import {loginApi} from "../../api/auth/auth";
 
 
 const onFinish = (values) => {
@@ -16,23 +16,20 @@ export default function AuthenticationForm({ visible, setVisible }) {
     const popNotification = useNotification();
 
     const initiateLogin = (values) => {
-        // const data = LoginAPI(values);
-        // data.then((res) => {
-        //     let status = res.status;
-        //     let message = res.message;
-            
-        //     popNotification(status, message, '');
-        //     if (status === 'success') {
-        //         Cookies.set('user', res.name);
-        //         setVisible(false);
-        //         setTimeout(() => { window.location.reload(); }, 2000);  
-        //     }
-        //     else if(status === 'info' && message === 'Already Logged In'){     
-        //         Cookies.set('user', res.name);
-        //         setVisible(false);
-        //         setTimeout(() => { window.location.reload(); }, 2000);  
-        //     }
-        // })
+        const data = loginApi(values);
+        data.then((res) => {
+            let data = res.data;
+            Cookies.set('token', data.token);
+            Cookies.set('user', data.name);
+            popNotification("success", data.message, '');
+            setVisible(false);
+            setTimeout(() => { window.location.reload(); }, 2000);  
+        }).catch((error) => {
+            const response = error.response;
+            popNotification('error', response.data, '');
+            Cookies.remove('token');
+            Cookies.remove('user');
+        });
     };
 
     const initiateSignin = (values) => {
