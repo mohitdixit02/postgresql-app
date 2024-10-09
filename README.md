@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+<h1>Postgresql App</h1>
+<h2>Project Overview</h2>
+<p>
+    This application allows users to create, edit and manage their tasks as well as job processes easily. It offers the following features:
+    <ul>
+        <li>Personalised Tasks and Job Management through authentication</li>
+        <li>Manage, Add, Delete and Update as much tasks and jobs as you want</li>
+    </ul>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h2>Technologies Stack</h2>
+<ul>
+    <li>
+        <h3>Frontend: React, Ant Design</h3>
+        <p>
+            The frontend of the application is made using React and components of Ant Design. It includes components like user authentication pannel, task manager page, and job manager page.
+        </p>
+    </li>
+    <li>
+        <h3>Backend: Express.js</h3>
+        <p>
+           The Backend of the application is made using Node and Express. The backend includes
+           <ol>
+                <li> APIs for user registration, tasks and jobs CRUD operations and fetching data for different componenets.</li>
+                <li> Models of Users, tasks and jobs </li>
+                <li> Sequelize for connecting models with the database</li>
+                <li> Bcrypt to ensure password safety</li>
+                <li> JWT for secure authentication</li>
+           </ol>
+        </p>
+    </li>
+    <li>
+        <h3>Database: PostgreSQL</h3>
+        <p>
+            PostgreSQL is used to store the users metadata and list of tasks and jobs associated with them. Sequelize is used to communicate between database and backend.
+        </p>
+    </li>
+</ul>
 
-## Available Scripts
+<h2>Installation</h2>
 
-In the project directory, you can run:
+<h3>Pre-requisites</h3>
+    <ul>
+        <li>Please make sure you have suitable Node.js version in your pc</li>
+        <li>Node depenedencies will be installed through package.json.</li>
+        <li>Setting up the project includes frontend, backend and database. Please refer to the original documentation provided along in case of any issue.</li>
+    </ul>
 
-### `npm start`
+<h3>Setting up the project</h3>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Clone the repository
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+git clone https://github.com/mohitdixit02/postgresql-app.git
+```
 
-### `npm test`
+2. Open the project in terminal and install the frontend dependencies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+cd postgresql-app/frontend
+npm i
+```
 
-### `npm run build`
+3. Similary install the backend dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+cd ../backend
+npm i
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Start the backend server
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+node index.mjs
+```
 
-### `npm run eject`
+5. In case you have nodemon and want to start the development server, you can directly use below command to invoke it.
+```bash
+npm run dev
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<h3>Setting up environment variables</h3>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Both frontend and backend have ```.env.example``` file. Set up your own ```.env``` by referring to it.
+Frontend env requires backend url while Backend env requires database credentials, jwt key, client url and environment.
+Use following if you want to set development mode and enable logging behaviour of sequelize:
+```NODE_ENV = 'development'```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<h3>Setting up the database</h3>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Please download the database from official website and follow the doucmentation to start database service in your local machine. If you have database online, use its credentials in the ```.env``` to connect with the database.
+Before starting the server make sure the database entered in ```DB_DATABASE``` is actually present before.
 
-## Learn More
+<h2>Documentation and Links to refer</h2>
+<ol>
+  <li>PostgreSQL: https://www.postgresql.org/</li>
+  <li>Sequelize: https://sequelize.org/</li>
+  <li>Node.js: https://nodejs.org/</li>
+  <li>Express.js: https://expressjs.com/</li>
+  <li>React: https://react.dev/</li>
+  <li>AntD: https://ant.design/</li>
+  <li>Bcrypt: https://www.npmjs.com/package/bcrypt</li>
+  <li>JWT: https://www.npmjs.com/package/jsonwebtoken</li>
+</ol>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<h2>Suggestions</h2>
+I am happy for any suggestions or improvements. Feel free to open an issue or pull request.
+or you can email me on: mohit.vsht@gmail.com
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thanks !!
+<h3>Mohit Sharma</h3>
