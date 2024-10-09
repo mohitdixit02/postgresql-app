@@ -1,7 +1,7 @@
 // database setup
 import { DataTypes } from 'sequelize';
 import { Postgres } from '../Config/Config.mjs';
-import bcrypt, { hash } from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 const Models = (sequelize) => {
     const User = sequelize.define("users", {

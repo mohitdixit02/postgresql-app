@@ -52,7 +52,7 @@ const get_jobs = async (req, res, next) => {
     const user_id = await userIDFromUserName(req.user.username);
 
     const jobs = await jobModel.findAll({
-        attributes: ['company_name', 'position', 'job_status'],
+        attributes: ['job_id','company_name', 'position', 'job_status'],
         where: {
             user_id: user_id
         }
@@ -68,7 +68,31 @@ const get_jobs = async (req, res, next) => {
         return;
     }
     else {
-        res.send(jobs);
+        let jobs_response = {
+            'all':[],
+            'preparing':[],
+            'interview':[],
+            'selected':[],
+            'rejected':[]
+        };
+        jobs.map((job) => {
+            let status = job.job_status;
+            jobs_response['all'].push(
+                {
+                    job_id: job.job_id,
+                    company_name: job.company_name,
+                    position: job.position,
+                    status: status
+                }
+            );
+            jobs_response[status.toLowerCase()].push({
+                job_id: job.job_id,
+                company_name: job.company_name,
+                position: job.position,
+                status: status
+            })
+        })
+        res.send(jobs_response);
     }
 };
 

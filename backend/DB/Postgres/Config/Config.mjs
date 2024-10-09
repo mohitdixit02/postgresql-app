@@ -15,8 +15,8 @@ const Postgres = {
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
 
-        // for dev only
-        logging: false
+        // only for development
+        logging: (process.env.NODE_ENV === 'development') ? true : false
     },
     client : null
 }
