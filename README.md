@@ -1,5 +1,17 @@
 <h1>Postgresql App</h1>
-<h2>Project Overview</h2>
+
+## Table of Content
+- [Project Overview](#project-overview)
+- [Technologies Stack](#technologies-stack)
+- [Installation](#installation)
+  - [Pre-requisites](#pre-requisites)
+  - [Setting up the project](#setting-up-the-project)
+  - [Setting up environment variables](#setting-up-environment-variables)
+  - [Setting up the database](#setting-up-the-database)
+- [Documentation and Links to refer](#documentation-and-links-to-refer)
+- [Suggestions](#suggestions)
+
+## Project Overview
 <p>
     This application allows users to create, edit and manage their tasks as well as job processes easily. It offers the following features:
     <ul>
@@ -8,7 +20,7 @@
     </ul>
 </p>
 
-<h2>Technologies Stack</h2>
+## Technologies Stack
 <ul>
     <li>
         <h3>Frontend: React, Ant Design</h3>
@@ -37,16 +49,16 @@
     </li>
 </ul>
 
-<h2>Installation</h2>
+## Installation
 
-<h3>Pre-requisites</h3>
-    <ul>
+### Pre-requisites
+<ul>
         <li>Please make sure you have suitable Node.js version in your pc</li>
         <li>Node depenedencies will be installed through package.json.</li>
         <li>Setting up the project includes frontend, backend and database. Please refer to the original documentation provided along in case of any issue.</li>
-    </ul>
+</ul>
 
-<h3>Setting up the project</h3>
+### Setting up the project
 
 1. Clone the repository
 
@@ -79,31 +91,31 @@ node index.mjs
 npm run dev
 ```
 
-<h3>Setting up environment variables</h3>
+### Setting up environment variables
 
 Both frontend and backend have ```.env.example``` file. Set up your own ```.env``` by referring to it.
 Frontend env requires backend url while Backend env requires database credentials, jwt key, client url and environment.
 Use following if you want to set development mode and enable logging behaviour of sequelize:
 ```NODE_ENV = 'development'```
 
-<h3>Setting up the database</h3>
+### Setting up the database
 
 Please download the database from official website and follow the doucmentation to start database service in your local machine. If you have database online, use its credentials in the ```.env``` to connect with the database.
 Before starting the server make sure the database entered in ```DB_DATABASE``` is actually present before.
 
-<h2>Documentation and Links to refer</h2>
+## Documentation and Links to refer
 <ol>
-  <li>PostgreSQL: https://www.postgresql.org/</li>
-  <li>Sequelize: https://sequelize.org/</li>
-  <li>Node.js: https://nodejs.org/</li>
-  <li>Express.js: https://expressjs.com/</li>
-  <li>React: https://react.dev/</li>
-  <li>AntD: https://ant.design/</li>
-  <li>Bcrypt: https://www.npmjs.com/package/bcrypt</li>
-  <li>JWT: https://www.npmjs.com/package/jsonwebtoken</li>
+<li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
+<li><a href="https://sequelize.org/">Sequelize</a></li>
+<li><a href="https://nodejs.org/">Node.js</a></li>
+<li><a href="https://expressjs.com/">Express.js</a></li>
+<li><a href="https://react.dev/">React</a></li>
+<li><a href="https://ant.design/">AntD</a></li>
+<li><a href="https://www.npmjs.com/package/bcrypt">Bcrypt</a></li>
+<li><a href="https://www.npmjs.com/package/jsonwebtoken">JWT</a></li>
 </ol>
 
-<h2>Suggestions</h2>
+## Suggestions
 I am happy for any suggestions or improvements. Feel free to open an issue or pull request.
 or you can email me on: mohit.vsht@gmail.com
 
