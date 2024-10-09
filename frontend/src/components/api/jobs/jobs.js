@@ -3,36 +3,36 @@ import Cookies from "js-cookie";
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-const get_tasks = async () => {
+const get_jobs = async () => {
     const token = Cookies.get('token');
-    return await axios.get(`${backendUrl}/api/tasks/get_tasks`, {
+    return await axios.get(`${backendUrl}/api/jobs/get_jobs`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
     });
 }
 
-const update_status = async (body) => {
+const create_job = async (body) => {
     const token = Cookies.get('token');
-    return await axios.post(`${backendUrl}/api/tasks/update_task`, body, {
+    return await axios.post(`${backendUrl}/api/jobs/create_job`, body, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
     });
 }
 
-const create_task = async (body) => {
+const update_job = async (body) => {
     const token = Cookies.get('token');
-    return await axios.post(`${backendUrl}/api/tasks/create_task`, body, {
+    return await axios.post(`${backendUrl}/api/jobs/update_job`, body, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
     });
 }
 
-const delete_task = async (body) => {
+const delete_job = async (body) => {
     const token = Cookies.get('token');
-    return await axios.post(`${backendUrl}/api/tasks/delete_task`, body, {
+    return await axios.post(`${backendUrl}/api/jobs/delete_job`, body, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -40,9 +40,8 @@ const delete_task = async (body) => {
 }
 
 export {
-    get_tasks,
-    update_status,
-    create_task,
-    delete_task
-}
-
+    get_jobs,
+    create_job,
+    update_job,
+    delete_job
+};

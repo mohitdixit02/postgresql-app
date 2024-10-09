@@ -49,13 +49,64 @@
 }
 .job_list_data_item_left{
     text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
 }
+
+.job_list_data_item_left h3{
+    font-size: 21px;
+}
+.job_list_data_item_left p{
+    padding-top: 6px;
+    font-size: 16px;
+}
+
 .job_list_data_item_right{
     text-align: right;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+.job_list_data_item_right p{
+    width: 150px;
+    text-align: center;
+    font-size: 17px;
+    padding: 2px;
+    border-radius: 4px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .job_list_item_button{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     margin-top: 5px;
+}
+.job_list_item_delete{
+    background-color: #9a7474;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.job_list_item_update{
+    background-color: #8a8a8a;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Not found div */
+.not_found_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    font-size: 30px;
+}
+
+.job_list_no_jobs{
+    padding: 100px 0;
+    font-size: 23px;
 }

@@ -87,3 +87,16 @@
 .task_manager_task_card_right svg:hover{
     color: red;
 }
+
+/* Not found div */
+.not_found_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    font-size: 30px;
+}
+.task_manager_no_tasks{
+    padding: 100px 0;
+    font-size: 23px;
+}
