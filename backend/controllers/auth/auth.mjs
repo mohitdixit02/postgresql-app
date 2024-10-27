@@ -2,8 +2,8 @@ import { where } from "sequelize";
 import { getUserModel } from "../../DB/Postgres/Models/Models.mjs";
 import BadRequestError from "../../errors/BadError.mjs";
 import UnauthorizedError from "../../errors/Unauthorized.mjs";
+import { generateJsonToken } from "../utility/utility_functions.mjs";
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 const login_user = async (req, res, next) => {
     const userModel = getUserModel();
@@ -39,16 +39,7 @@ const login_user = async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, user_password);
 
     if(isMatch){
-        const token = jwt.sign(
-            {
-                username: user.username,
-                password: user.password,
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: process.env.JWT_EXPIRES_IN,
-            }
-        )
+        const token = generateJsonToken(user.username, user.password);
         res.send({
             "message":'User login successfully',
             "name": user.name,
@@ -109,10 +100,12 @@ const register_user = async (req, res, next) => {
             return;
         }
         else{
+            const token = generateJsonToken(new_user.username, new_user.password);
             res.send({
                 "message": "User registered successfully",
                 "name": new_user.name,
                 "username": new_user.username,
+                "token": token
             });
         }
     }

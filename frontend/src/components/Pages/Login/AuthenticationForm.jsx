@@ -2,8 +2,7 @@ import React from 'react';
 import Cookies from 'js-cookie';
 import { Modal, Tabs, Button, Form, Input } from 'antd';
 import { useNotification } from '../../Notifications/Notifications';
-import {loginApi} from "../../api/auth/auth";
-
+import {loginApi, registerApi} from "../../api/auth/auth";
 
 const onFinish = (values) => {
     console.log('Success:', values);
@@ -31,18 +30,25 @@ export default function AuthenticationForm({ visible, setVisible }) {
             Cookies.remove('user');
         });
     };
-
-    const initiateSignin = (values) => {
-        // const data = SigninAPI(values);
-        // data.then((res) => {
-        //     let status = res.status;
-        //     let message = res.message;
-            
-        //     popNotification(status, message, '');
-        //     if (status === 'success') {
-        //         setVisible(false);
-        //     }
-        // })
+    
+    const initiateSignIn = (values) => {
+        const body = {
+            name: values.fullname,
+            email: values.email,
+            username: values.username,
+            password: values.password,
+        }
+        registerApi(body).then((res) => {
+            let data = res.data;
+            popNotification("success", data.message, '');
+            Cookies.set('token', data.token);
+            Cookies.set('user', data.name);
+            setVisible(false);
+            setTimeout(() => { window.location.reload(); }, 2000);
+        }).catch((error) => {
+            const response = error.response;
+            popNotification('error', response.data, '');
+        });
     };
 
     return (
@@ -130,7 +136,7 @@ export default function AuthenticationForm({ visible, setVisible }) {
                                 style={{
                                     maxWidth: 700,
                                 }}
-                                onFinish={initiateSignin}
+                                onFinish={initiateSignIn}
                                 onFinishFailed={onFinishFailed}
                                 autoComplete="off"
                             >

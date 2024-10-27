@@ -1,5 +1,6 @@
 import { getUserModel } from "../../DB/Postgres/Models/Models.mjs";
 import BadRequestError from "../../errors/BadError.mjs";
+import jwt from 'jsonwebtoken';
 
 // utility function
 const userIDFromUserName = async (username) => {
@@ -21,4 +22,20 @@ const userIDFromUserName = async (username) => {
     return user.user_id;
 }
 
-export { userIDFromUserName };
+const generateJsonToken = (username, password) => {
+    return jwt.sign(
+        {
+            username: username,
+            password: password,
+        },
+        process.env.JWT_SECRET,
+        {
+            expiresIn: process.env.JWT_EXPIRES_IN,
+        }
+    )
+}
+
+export { 
+    userIDFromUserName,
+    generateJsonToken 
+};

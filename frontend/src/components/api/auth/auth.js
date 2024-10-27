@@ -6,6 +6,11 @@ const loginApi = (body) => {
     return axios.post(`${backendUrl}/api/auth/login`, body);
 }
 
+const registerApi = (body) => {
+    return axios.post(`${backendUrl}/api/auth/register`, body);
+}
+
 export {
-    loginApi
+    loginApi,
+    registerApi
 };
