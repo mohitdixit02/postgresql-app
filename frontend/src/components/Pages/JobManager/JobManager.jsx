@@ -30,9 +30,9 @@ const Options = [
 ];
 
 const backgroundColorType = {
-    'preparing': '#ffce00',
+    'preparing': '#ed8e4e',
     'interview': '#6452ff',
-    'selected': '#00ff24',
+    'selected': '#2cb852',
     'rejected': '#ff0000'
 }
 
@@ -130,14 +130,15 @@ export default function JobManager() {
                             <Form
                                 form={form}
                                 name="job form"
+                                layout='vertical'
                                 labelCol={{
-                                    span: 4,
+                                    span: 15,
                                 }}
                                 wrapperCol={{
-                                    span: 19,
+                                    span: 130,
                                 }}
                                 style={{
-                                    width: 800,
+                                    width: 700,
                                 }}
                                 onFinish={formStatus === 'add' ? createJobFunction : updateJobFunction}
                                 onFinishFailed={onFinishFailed}

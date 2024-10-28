@@ -14,7 +14,7 @@ export default function TaskManager() {
     const user = Cookies.get('user');
 
     useEffect(() => {
-        if(user){
+        if (user) {
             get_tasks().then((res) => {
                 let data = res.data;
                 setTasks(data);
@@ -96,54 +96,54 @@ export default function TaskManager() {
         });
     }
 
-    if(user != undefined){
-    return (
-        <div className={s['task_manager_parent_holder']}>
-            <div className={s['task_manager_parent']}>
-                <h2>Task Manager</h2>
-                <div className={s["task_manager_input_holder"]}>
-                    <div>
-                        <input type="text" placeholder="Enter Task" className="new_task_input_section" />
-                        <button onClick={addNewTask}>Add Task</button>
-                    </div>
-                </div>
-                <hr />
-                <div className={s["task_manager_tasks_collection"]}>
-                    {tasks.length === 0 && <div className={s["task_manager_no_tasks"]}>No tasks to show</div>}
-                    {tasks.map((item, index) => <div key={`task_card_key:${index}`} className={s["task_manager_task_card"]}>
-                        <div className={s["task_manager_task_card_left"]}>
-                            <Checkbox
-                                checked={item?.task_status === "done" ? true : false}
-                                onChange={(e) => onChange(e, item, index)}
-                            >
-                                <div
-                                    className={s["task_manager_task_card_left_text"]}
-                                    style={item?.task_status === "done" ? { "textDecoration": "line-through" } : {}}
+    if (user != undefined) {
+        return (
+            <div className={s['task_manager_parent_holder']}>
+                <div className={s['task_manager_parent']}>
+                   <div className={s["task_manager_tasks_collection"]}>
+                        {tasks.length === 0 && <div className={s["task_manager_no_tasks"]}>No tasks to show</div>}
+                        {tasks.map((item, index) => <div key={`task_card_key:${index}`} className={s["task_manager_task_card"]}>
+                            <div className={s["task_manager_task_card_left"]}>
+                                <Checkbox
+                                    checked={item?.task_status === "done" ? true : false}
+                                    onChange={(e) => onChange(e, item, index)}
                                 >
-                                    {item?.task_name}
-                                </div>
-                            </Checkbox>
+                                    <div
+                                        className={s["task_manager_task_card_left_text"]}
+                                        style={item?.task_status === "done" ? { "textDecoration": "line-through" } : {}}
+                                    >
+                                        {item?.task_name}
+                                    </div>
+                                </Checkbox>
+                            </div>
+                            <div className={s["task_manager_task_card_right"]}>
+                                <Popconfirm
+                                    title="Delete the task"
+                                    description="Are you sure to delete this task?"
+                                    onConfirm={() => deleteTask(item)}
+                                    placement="topLeft"
+                                    okText="Yes"
+                                    cancelText="No"
+                                >
+                                    <DeleteOutlined />
+                                </Popconfirm>
+                            </div>
                         </div>
-                        <div className={s["task_manager_task_card_right"]}>
-                            <Popconfirm
-                                title="Delete the task"
-                                description="Are you sure to delete this task?"
-                                onConfirm={() => deleteTask(item)}
-                                placement="topLeft"
-                                okText="Yes"
-                                cancelText="No"
-                            >
-                                <DeleteOutlined/>
-                            </Popconfirm>
+                        )}
+                    </div>
+                    <hr />
+                    <div className={s["task_manager_input_holder"]}>
+                        <div>
+                            <input type="text" placeholder="Enter Task" className="new_task_input_section" />
+                            <button onClick={addNewTask}>Add Task</button>
                         </div>
                     </div>
-                    )}
                 </div>
             </div>
-        </div>
-    )}
-    else{
-        return(
+        )
+    }
+    else {
+        return (
             <div className={s["not_found_div"]}>
                 Please login to view this page
             </div>

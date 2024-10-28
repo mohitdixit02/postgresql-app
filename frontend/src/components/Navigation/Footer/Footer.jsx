@@ -4,7 +4,7 @@ import s from "./Footer.module.css";
 export default function Footer() {
   return (
     <div className={s["footer"]}>
-        mohit.vsht@gmail.com
+        Crafted by Mohit Sharma. Reach out to me at: mohit.vsht@gmail.com
     </div>
   )
 }

@@ -1,0 +1,9 @@
+.menu_top_display{
+    text-align: center;
+    padding: 20px 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+.menu_top_display span{
+    color: blue;
+}

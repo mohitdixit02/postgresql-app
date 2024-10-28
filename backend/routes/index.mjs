@@ -2,6 +2,7 @@ import express from "express";
 import job_router from "./jobs.mjs";
 import task_router from "./tasks.mjs";
 import auth_router from "./auth.mjs";
+import dashboard_router from "./dashboard.mjs";
 import auth_middleware from "../middleware/auth_verify.mjs";
 import error_middleware from "../middleware/error_middleware.mjs";
 
@@ -16,6 +17,7 @@ router.use(auth_middleware);
 // data routes
 router.use("/api/jobs", job_router);
 router.use("/api/tasks", task_router);
+router.use('/api/dashboard', dashboard_router);
 
 // error handling middleware
 router.use(error_middleware);
