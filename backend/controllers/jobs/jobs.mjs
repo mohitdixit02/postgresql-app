@@ -97,14 +97,12 @@ const get_jobs = async (req, res, next) => {
 const update_job = async (req, res, next) => {
     const {
         job_id,
-        company_name,
-        position,
-        status
+        changes
     } = req.body;
 
     const jobModel = getJobModel();
 
-    if (!isUuid(job_id) || !status || !company_name || !position) {
+    if (!isUuid(job_id) || Object.keys(changes).length === 0) {
         try {
             throw new BadRequestError("Invalid fields");
         }
@@ -116,11 +114,7 @@ const update_job = async (req, res, next) => {
 
     const user_id = await userIDFromUserName(req.user.username);
 
-    const job = await jobModel.update({
-        company_name: company_name,
-        position: position,
-        job_status: status
-    }, {
+    const job = await jobModel.update(changes, {
         where: {
             job_id: job_id,
             user_id: user_id

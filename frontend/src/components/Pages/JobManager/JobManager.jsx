@@ -43,6 +43,7 @@ export default function JobManager() {
     const [formStatus, setFormStatus] = useState('add');
     const [activeJobID, setActiveJobID] = useState(null);
     const [form] = Form.useForm();
+    const [formInitialValues, setFormInitialValues] = useState({});
 
     const user = Cookies.get("user");
 
@@ -60,12 +61,18 @@ export default function JobManager() {
         }
     }, [statusType]);
 
+    useEffect(() => {
+        if (formStatus === "update") {
+            setFormInitialValues(form.getFieldsValue());
+        }
+    }, [formStatus]);
+
     const createJobFunction = (values) => {
         create_job(values).then((res) => {
             let data = res.data;
             popNotification("success", data.message, '');
             form.resetFields();
-            get_jobs().then((res) => {
+            get_jobs(statusType).then((res) => {
                 let data = res.data;
                 setJobs(data);
             });
@@ -77,14 +84,33 @@ export default function JobManager() {
     }
 
     const updateJobFunction = (values) => {
-        const body = values;
-        body.job_id = activeJobID;
+        let changes = {};
+        for (let i of Object.keys(values)) {
+            if (values[i] !== formInitialValues[i]) {
+                if (i === 'status') {
+                    changes['job_status'] = values[i];
+                }
+                else {
+                    changes[i] = values[i];
+                }
+            }
+        }
+
+        if(Object.keys(changes).length === 0){
+            popNotification('error', 'No changes made', 'Make some changes and try again');
+            return;
+        }
+
+        const body = {
+            changes: changes,
+            job_id: activeJobID
+        }
         update_job(body).then((res) => {
             let data = res.data;
             popNotification("success", data.message, '');
             form.resetFields();
             setFormStatus('add');
-            get_jobs().then((res) => {
+            get_jobs(statusType).then((res) => {
                 let data = res.data;
                 setJobs(data);
             });
@@ -98,7 +124,7 @@ export default function JobManager() {
         delete_job({ job_id: item.job_id }).then((res) => {
             let data = res.data;
             popNotification("success", data.message, '');
-            get_jobs().then((res) => {
+            get_jobs(statusType).then((res) => {
                 let data = res.data;
                 setJobs(data);
             });
