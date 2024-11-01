@@ -3,9 +3,9 @@ import Cookies from "js-cookie";
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-const get_jobs = async () => {
+const get_jobs = async (type) => {
     const token = Cookies.get('token');
-    return await axios.get(`${backendUrl}/api/jobs/get_jobs`, {
+    return await axios.get(`${backendUrl}/api/jobs/get_jobs?type=${type}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

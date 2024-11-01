@@ -2,6 +2,7 @@ import { getJobModel } from "../../DB/Postgres/Models/Models.mjs";
 import { validate as isUuid } from 'uuid';
 import BadRequestError from "../../errors/BadError.mjs";
 import { userIDFromUserName } from "../utility/utility_functions.mjs";
+import { Op } from "sequelize";
 
 // controller functions
 const create_job = async (req, res, next) => {
@@ -48,14 +49,37 @@ const create_job = async (req, res, next) => {
 };
 
 const get_jobs = async (req, res, next) => {
+    const type = req.query.type;
+
+    if(!type){
+        try {
+            throw new BadRequestError("Invalid type");
+        }
+        catch (err) {
+            next(err);
+        }
+        return;
+    }
+
     const jobModel = getJobModel();
     const user_id = await userIDFromUserName(req.user.username);
 
     const jobs = await jobModel.findAll({
         attributes: ['job_id','company_name', 'position', 'job_status'],
         where: {
-            user_id: user_id
-        }
+            user_id: user_id,
+            job_status: 
+            type !== "all" ? type 
+            : {
+                [Op.not]: null
+            }
+        },
+        attributes:[
+            'job_id',
+            'company_name',
+            'position',
+            ['job_status', 'status']
+        ]
     });
 
     if (!jobs) {
@@ -67,33 +91,7 @@ const get_jobs = async (req, res, next) => {
         }
         return;
     }
-    else {
-        let jobs_response = {
-            'all':[],
-            'preparing':[],
-            'interview':[],
-            'selected':[],
-            'rejected':[]
-        };
-        jobs.map((job) => {
-            let status = job.job_status;
-            jobs_response['all'].push(
-                {
-                    job_id: job.job_id,
-                    company_name: job.company_name,
-                    position: job.position,
-                    status: status
-                }
-            );
-            jobs_response[status.toLowerCase()].push({
-                job_id: job.job_id,
-                company_name: job.company_name,
-                position: job.position,
-                status: status
-            })
-        })
-        res.send(jobs_response);
-    }
+    else res.send(jobs);
 };
 
 const update_job = async (req, res, next) => {

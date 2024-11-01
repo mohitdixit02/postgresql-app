@@ -50,7 +50,7 @@ export default function JobManager() {
 
     useEffect(() => {
         if (user) {
-            get_jobs().then((res) => {
+            get_jobs(statusType).then((res) => {
                 let data = res.data;
                 setJobs(data);
             }).catch((err) => {
@@ -58,7 +58,7 @@ export default function JobManager() {
                 popNotification('error', response.data, '');
             });
         }
-    }, []);
+    }, [statusType]);
 
     const createJobFunction = (values) => {
         create_job(values).then((res) => {
@@ -204,8 +204,8 @@ export default function JobManager() {
                                 <Select defaultValue={statusType} style={{ 'width': '180px' }} options={Options} onChange={(value) => setStatusType(value)} />
                             </div>
                             <div className={s['job_list_data']}>
-                                {jobs[statusType]?.length == 0 && <div className={s["job_list_no_jobs"]}>No jobs to show</div>}
-                                {jobs[statusType]?.map((item, index) => {
+                                {jobs?.length === 0 && <div className={s["job_list_no_jobs"]}>No jobs to show</div>}
+                                {jobs?.map((item, index) => {
                                     return (
                                         <div className={s['job_list_data_item']} key={`company_type_object_${index}`}>
                                             <div className={s['job_list_data_item_left']}>
