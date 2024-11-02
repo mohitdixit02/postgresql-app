@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import s from "./Navbar.module.css";
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -10,21 +10,24 @@ import AuthenticationForm from '../../Pages/Login/AuthenticationForm';
 import Cookies from 'js-cookie';
 
 const activePageTextCollection = {
-    "/":"Dashboard",
-    "/task_manager":"Task Manager",
-    "/job_manager":"Job Manager",
-    "/issues":"Issues",
+    "/": "Dashboard",
+    "/task_manager": "Task Manager",
+    "/job_manager": "Job Manager",
+    "/issues": "Issues",
 };
 
 export default function Navbar({ collapsed, setCollapsed }) {
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [activePageText, setActivePageText] = useState('');
     const user = Cookies.get('user');
     const navigate = useNavigate();
 
     const logoutFunction = () => {
+        setLoading(true);
         Cookies.remove('user');
         Cookies.remove('token');
+        setLoading(false);
         window.location.pathname !== "/" ? navigate('/') : window.location.reload();
     }
 
@@ -50,13 +53,15 @@ export default function Navbar({ collapsed, setCollapsed }) {
             </div>
             <div className={s["navbar_holder_right"]}>
                 {user ?
-                    <Button
-                        color='danger'
-                        variant='solid'
-                        onClick={logoutFunction}
-                    >
-                        Logout
-                    </Button>
+                    <Spin spinning={loading}>
+                        <Button
+                            color='danger'
+                            variant='solid'
+                            onClick={logoutFunction}
+                        >
+                            Logout
+                        </Button>
+                    </Spin>
                     :
                     <Button
                         color='primary'

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import s from "./TaskManager.module.css";
-import { Checkbox, Popconfirm } from 'antd';
+import { Checkbox, Popconfirm, Spin } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useNotification } from '../../Notifications/Notifications';
 import { get_tasks, update_status, create_task, delete_task } from '../../api/tasks/tasks';
@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 
 export default function TaskManager() {
     const [tasks, setTasks] = useState([]);
+    const [loading, setLoading] = useState(false);
     const popNotification = useNotification();
 
     const user = Cookies.get('user');
@@ -52,8 +53,10 @@ export default function TaskManager() {
     };
 
     const addNewTask = () => {
+        setLoading(true);
         let task_name = document.querySelector(".new_task_input_section").value;
         if (task_name === "") {
+            setLoading(false);
             popNotification("error", "Task name cannot be empty", '');
             return;
         }
@@ -68,11 +71,13 @@ export default function TaskManager() {
             get_tasks().then((res) => {
                 let data = res.data;
                 setTasks(data);
+                setLoading(false);
             });
 
         }).catch((error) => {
             let response = error.response;
             popNotification('error', response.data, '');
+            setLoading(false);
         });
 
         document.querySelector(".new_task_input_section").value = "";
@@ -100,7 +105,7 @@ export default function TaskManager() {
         return (
             <div className={s['task_manager_parent_holder']}>
                 <div className={s['task_manager_parent']}>
-                   <div className={s["task_manager_tasks_collection"]}>
+                    <div className={s["task_manager_tasks_collection"]}>
                         {tasks.length === 0 && <div className={s["task_manager_no_tasks"]}>No tasks to show</div>}
                         {tasks.map((item, index) => <div key={`task_card_key:${index}`} className={s["task_manager_task_card"]}>
                             <div className={s["task_manager_task_card_left"]}>
@@ -135,7 +140,17 @@ export default function TaskManager() {
                     <div className={s["task_manager_input_holder"]}>
                         <div>
                             <input type="text" placeholder="Enter Task" className="new_task_input_section" />
-                            <button onClick={addNewTask}>Add Task</button>
+                            <button onClick={addNewTask}>
+                                {loading ?
+                                    <div>
+                                        <Spin spinning={loading} />
+                                    </div>
+                                    :
+                                    <>
+                                        Add Task
+                                    </>
+                                }
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import s from "./JobManager.module.css";
-import { Form, Input, Button, Select, Popconfirm } from 'antd';
+import { Form, Input, Button, Select, Popconfirm, Spin } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { get_jobs, create_job, update_job, delete_job } from '../../api/jobs/jobs';
 import { useNotification } from '../../Notifications/Notifications';
@@ -39,6 +39,7 @@ const backgroundColorType = {
 export default function JobManager() {
     const popNotification = useNotification();
     const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [statusType, setStatusType] = useState('all');
     const [formStatus, setFormStatus] = useState('add');
     const [activeJobID, setActiveJobID] = useState(null);
@@ -68,6 +69,7 @@ export default function JobManager() {
     }, [formStatus]);
 
     const createJobFunction = (values) => {
+        setLoading(true);
         create_job(values).then((res) => {
             let data = res.data;
             popNotification("success", data.message, '');
@@ -75,15 +77,18 @@ export default function JobManager() {
             get_jobs(statusType).then((res) => {
                 let data = res.data;
                 setJobs(data);
+                setLoading(false);
             });
 
         }).catch((error) => {
             let response = error.response;
             popNotification('error', response.data, '');
+            setLoading(false);
         });
     }
 
     const updateJobFunction = (values) => {
+        setLoading(true);
         let changes = {};
         for (let i of Object.keys(values)) {
             if (values[i] !== formInitialValues[i]) {
@@ -96,8 +101,9 @@ export default function JobManager() {
             }
         }
 
-        if(Object.keys(changes).length === 0){
+        if (Object.keys(changes).length === 0) {
             popNotification('error', 'No changes made', 'Make some changes and try again');
+            setLoading(false);
             return;
         }
 
@@ -113,10 +119,12 @@ export default function JobManager() {
             get_jobs(statusType).then((res) => {
                 let data = res.data;
                 setJobs(data);
+                setLoading(false);
             });
         }).catch((error) => {
             let response = error.response;
             popNotification('error', response.data, '');
+            setLoading(false);
         })
     };
 
@@ -214,9 +222,13 @@ export default function JobManager() {
                                         span: 16,
                                     }}
                                 >
-                                    <Button style={{ "marginTop": "5px" }} type="primary" htmlType="submit">
-                                        {formStatus === 'add' ? 'Add Job' : 'Update Job'}
-                                    </Button>
+                                    {loading ?
+                                        <Spin/>
+                                        :
+                                        <Button style={{ "marginTop": "5px" }} type="primary" htmlType="submit">
+                                            {formStatus === 'add' ? 'Add Job' : 'Update Job'}
+                                        </Button>
+                                    }
                                 </Form.Item>
                             </Form>
                         </div>
