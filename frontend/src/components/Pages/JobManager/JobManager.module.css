@@ -159,6 +159,7 @@
 @media screen and (max-width: 1200px){
     .job_manager_parent{
         flex-direction: column;
+        justify-content: start;
         row-gap: 20px;
     }
     .job_manager_form_holder{
