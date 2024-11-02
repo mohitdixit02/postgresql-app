@@ -86,6 +86,7 @@
 }
 .task_manager_task_card_left_text{
     font-size: 15px;
+    margin-bottom: 1px;
 }
 .task_manager_task_card_right svg{
     font-size: 18px;
@@ -114,4 +115,59 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* responsiveness */
+@media screen and (max-width: 768px) {
+    .task_manager_parent{
+        padding: 16px;
+    }
+    .task_manager_tasks_collection{
+        height: 80%;
+    }
+    .task_manager_input_holder button{
+        font-size: 14px;
+    }
+    .task_manager_input_holder{
+        width: calc(100% - 35px);
+    }
+}
+@media screen and (max-width: 540px) {
+    .task_manager_parent{
+        padding: 16px 10px;
+    }
+    .task_manager_parent_holder{
+        height: calc(100vh - 48px);
+        overflow-y: scroll;
+    }
+    .task_manager_task_card{
+        padding: 10px 10px;
+    }
+    .task_manager_task_card_left_text{
+        font-size: 13px;
+        margin-bottom: 3px;
+    }
+    .task_manager_task_card_right svg{
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .task_manager_input_holder{
+        bottom: 20px;
+        width: calc(100% - 25px);
+    }
+    .task_manager_input_holder input{
+        width: 75%;
+        height: 40px;
+        font-size: 14px;
+    }
+    .task_manager_input_holder button{
+        width: 25%;
+        height: 40px;
+        font-size: 12px;
+    }
+    .task_manager_parent hr{
+        bottom: 49px;
+        width: calc(100% - 25px);
+    }
 }

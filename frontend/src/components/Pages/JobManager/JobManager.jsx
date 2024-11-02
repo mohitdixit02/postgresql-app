@@ -216,12 +216,7 @@ export default function JobManager() {
                                 >
                                     <Select placeholder="Select Status" options={Options.slice(1)} />
                                 </Form.Item>
-                                <Form.Item
-                                    wrapperCol={{
-                                        offset: 4,
-                                        span: 16,
-                                    }}
-                                >
+                                <Form.Item>
                                     {loading ?
                                         <Spin/>
                                         :

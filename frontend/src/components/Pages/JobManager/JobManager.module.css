@@ -155,3 +155,78 @@
     padding: 100px 0;
     font-size: 23px;
 }
+
+@media screen and (max-width: 1200px){
+    .job_manager_parent{
+        flex-direction: column;
+        row-gap: 20px;
+    }
+    .job_manager_form_holder{
+        width: 100%;
+        padding: 15px;
+        row-gap: 2px;
+    }
+    .job_list_container_holder{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 932px){
+    .job_manager_parent{
+        padding-top: 0;
+    }
+    .job_manager_form_holder{
+        padding: 10px;
+    }
+    .job_list_data_item_right p{
+        width: 100px;
+    }
+    .job_manager_parent_holder{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    .job_manager_parent{
+        width: 67vw;
+        height: 100%;
+        padding-top: 18px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .job_list_container_holder{
+        padding-bottom: 40px;
+    }
+    .job_manager_parent{
+        width: 95vw;
+        overflow-y: scroll;
+    }
+    .job_manager_parent::-webkit-scrollbar{
+        display: none;
+    }
+    .job_list_data{
+        height: max-content;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .job_manager_parent_holder{
+        height: calc(100vh - 50px);
+    }
+    .job_manager_form_holder h2{
+        font-size: 20px;
+    }
+    .job_list_data_item_left h3{
+        font-size: 19px;
+    }
+    .job_list_data_item_left p{
+        padding-top: 2px;
+        font-size: 15px;
+    }
+    .job_list_container_top h2{
+        font-size: 17px;
+    }
+    .job_list_data_item_right p{
+        font-size: 13px;
+    }
+}

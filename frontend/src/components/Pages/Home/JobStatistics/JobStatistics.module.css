@@ -56,3 +56,49 @@
      justify-content: space-between;
      column-gap: 10px;
  }
+
+/* Responsive design */
+ @media screen and (max-width: 1024px){
+    .job_statistics_main h2{
+        font-size: 22px;
+    }
+    .job_statistics_container_child{
+        padding: 20px;
+        font-size: 16px;
+    }
+    .job_statistics_container_child h3{
+        font-size: 17px;
+        margin-bottom: 3px;
+    }
+    .job_statistics_container_layout_2 .task_statistics_container_child div{
+        margin-top: 15px;
+        height: 80%;
+    }
+    .job_statistics_container_layout_2 h2{
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width: 820px){
+    .job_statistics_container{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+    }
+    .job_statistics_container_layout_1{
+        width: 100%; 
+    }
+    .job_statistics_container_layout_2{
+        width: 100%;
+    }
+    .job_statistics_container_layout_2 .job_statistics_container_child{
+        height: 350px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .job_statistics_container_layout_2 .job_statistics_container_child{
+        height: 300px;
+    }
+}

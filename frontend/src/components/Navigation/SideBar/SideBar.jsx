@@ -32,6 +32,8 @@ const App = ({ collapsed, setCollapsed }) => {
             trigger={null}
             theme="light"
             collapsible
+            collapsedWidth={0}
+            breakpoint="md"
             collapsed={collapsed}
             onCollapse={(value) => setCollapsed(value)}
         >

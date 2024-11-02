@@ -22,3 +22,20 @@
 .navbar_holder_right button{
     font-size: 15px;
 }
+
+@media screen and (max-width: 768px){
+    .navbar_holder_left{
+        font-size: 20px;
+    }
+    .navbar_holder_right button{
+        font-size: 12px;
+        font-weight: bold;
+    }    
+}
+
+@media screen and (max-width: 540px){
+    .navbar_holder_left{
+        font-size: 19px;
+    }
+    
+}

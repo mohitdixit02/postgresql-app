@@ -33,6 +33,7 @@ export default function Navbar({ collapsed, setCollapsed }) {
 
     useEffect(() => {
         let path = window.location.pathname;
+        if(window.innerWidth < 768) setCollapsed(true);
         setActivePageText(activePageTextCollection?.[path] || "");
     }, [window.location.pathname]);
 
