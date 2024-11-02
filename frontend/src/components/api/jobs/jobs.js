@@ -23,7 +23,7 @@ const create_job = async (body) => {
 
 const update_job = async (body) => {
     const token = Cookies.get('token');
-    return await axios.post(`${backendUrl}/api/jobs/update_job`, body, {
+    return await axios.put(`${backendUrl}/api/jobs/update_job`, body, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -32,10 +32,11 @@ const update_job = async (body) => {
 
 const delete_job = async (body) => {
     const token = Cookies.get('token');
-    return await axios.post(`${backendUrl}/api/jobs/delete_job`, body, {
+    return await axios.delete(`${backendUrl}/api/jobs/delete_job`, {
         headers: {
             'Authorization': `Bearer ${token}`
-        }
+        },
+        data: body
     });
 }
 

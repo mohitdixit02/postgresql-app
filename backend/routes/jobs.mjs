@@ -9,7 +9,7 @@ import {
 
 router.get('/get_jobs', get_jobs)
 router.post('/create_job', create_job)
-router.post('/update_job', update_job)
-router.post('/delete_job', delete_job)
+router.put('/update_job', update_job)
+router.delete('/delete_job', delete_job)
 
 export default router;

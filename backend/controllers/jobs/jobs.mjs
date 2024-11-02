@@ -92,7 +92,7 @@ const update_job = async (req, res, next) => {
 
     const jobModel = getJobModel();
 
-    if (!isUuid(job_id) || Object.keys(changes).length === 0) {
+    if (!isUuid(job_id) || !changes || Object.keys(changes).length === 0) {
         try {
             throw new BadRequestError("Invalid fields");
         }

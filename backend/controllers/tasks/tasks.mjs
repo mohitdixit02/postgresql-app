@@ -13,6 +13,16 @@ const create_task = async (req, res, next) => {
     const taskModel = getTaskModel();
     const user_id = await userIDFromUserName(req.user.username);
 
+    if(!title || !status) {
+        try {
+            throw new BadRequestError("Title or status missing");
+        }
+        catch (err) {
+            next(err);
+        }
+        return;
+    }
+
     try {
         const task = await taskModel.create({
             task_name: title,

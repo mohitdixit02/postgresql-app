@@ -9,7 +9,7 @@ import {
 
 router.post('/create_task', create_task);
 router.get('/get_tasks', get_tasks);
-router.post('/update_task', update_task);
-router.post('/delete_task', delete_task);
+router.put('/update_task', update_task);
+router.delete('/delete_task', delete_task);
 
 export default router;

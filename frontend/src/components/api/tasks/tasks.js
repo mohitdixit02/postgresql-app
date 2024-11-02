@@ -14,7 +14,7 @@ const get_tasks = async () => {
 
 const update_status = async (body) => {
     const token = Cookies.get('token');
-    return await axios.post(`${backendUrl}/api/tasks/update_task`, body, {
+    return await axios.put(`${backendUrl}/api/tasks/update_task`, body, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -32,10 +32,11 @@ const create_task = async (body) => {
 
 const delete_task = async (body) => {
     const token = Cookies.get('token');
-    return await axios.post(`${backendUrl}/api/tasks/delete_task`, body, {
+    return await axios.delete(`${backendUrl}/api/tasks/delete_task`, {
         headers: {
             'Authorization': `Bearer ${token}`
-        }
+        },
+        data: body
     });
 }
 
