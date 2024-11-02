@@ -1,7 +1,7 @@
 import { getTaskModel } from "../../DB/Postgres/Models/Models.mjs";
 import { validate as isUuid } from 'uuid';
 import BadRequestError from "../../errors/BadError.mjs";
-import { userIDFromUserName } from "../utility/utility_functions.mjs";
+import { userIDFromUserName, handleSequelizeError } from "../utility/utility_functions.mjs";
 
 // controller functions
 const create_task = async (req, res, next) => {
@@ -13,26 +13,20 @@ const create_task = async (req, res, next) => {
     const taskModel = getTaskModel();
     const user_id = await userIDFromUserName(req.user.username);
 
-    const task = await taskModel.create({
-        task_name: title,
-        task_status: status,
-        user_id: user_id
-    });
+    try {
+        const task = await taskModel.create({
+            task_name: title,
+            task_status: status,
+            user_id: user_id
+        });
 
-    if (!task) {
-        try {
-            throw new BadRequestError("Error while creating task");
-        }
-        catch (err) {
-            next(err);
-        }
-        return;
-    }
-    else {
         res.send({
             "message": "Task created successfully",
             "title": task.task_name,
         });
+    }
+    catch (err) {
+        handleSequelizeError(err, next, "creating task");
     }
 };
 
@@ -40,24 +34,18 @@ const get_tasks = async (req, res, next) => {
     const taskModel = getTaskModel();
     const user_id = await userIDFromUserName(req.user.username);
 
-    const tasks = await taskModel.findAll({
-        attributes: ['task_id', 'task_name', 'task_status'],
-        where: {
-            user_id: user_id
-        }
-    });
+    try {
+        const tasks = await taskModel.findAll({
+            attributes: ['task_id', 'task_name', 'task_status'],
+            where: {
+                user_id: user_id
+            }
+        });
 
-    if (!tasks) {
-        try {
-            throw new BadRequestError("Error while getting tasks");
-        }
-        catch (err) {
-            next(err);
-        }
-        return;
-    }
-    else {
         res.send(tasks);
+    }
+    catch {
+        handleSequelizeError(err, next, "fetching tasks");
     }
 };
 
@@ -81,28 +69,22 @@ const update_task = async (req, res, next) => {
 
     const user_id = await userIDFromUserName(req.user.username);
 
-    const task = await taskModel.update({
-        task_status: status
-    }, {
-        where: {
-            task_id: task_id,
-            user_id: user_id
-        }
-    });
+    try {
+        await taskModel.update({
+            task_status: status
+        }, {
+            where: {
+                task_id: task_id,
+                user_id: user_id
+            }
+        });
 
-    if (!task) {
-        try {
-            throw new BadRequestError("Error while updating task");
-        }
-        catch (err) {
-            next(err);
-        }
-        return;
-    }
-    else {
         res.send({
             "message": "Task updated successfully",
         });
+    }
+    catch (err) {
+        handleSequelizeError(err, next, "updating task");
     }
 };
 
@@ -111,7 +93,7 @@ const delete_task = async (req, res, next) => {
         task_id
     } = req.body;
 
-    if(!isUuid(task_id)) {
+    if (!isUuid(task_id)) {
         try {
             throw new BadRequestError("Invalid task id");
         }
@@ -124,26 +106,21 @@ const delete_task = async (req, res, next) => {
     const taskModel = getTaskModel();
     const user_id = await userIDFromUserName(req.user.username);
 
-    const task = await taskModel.destroy({
-        where: {
-            task_id: task_id,
-            user_id: user_id
-        }
-    });
-    if (!task) {
-        try {
-            throw new BadRequestError("Error while deleting task");
-        }
-        catch (err) {
-            next(err);
-        }
-        return;
-    }
-    else {
+    try {
+        await taskModel.destroy({
+            where: {
+                task_id: task_id,
+                user_id: user_id
+            }
+        });
+
         res.send({
             "message": "Task deleted successfully",
         });
-    }   
+    }
+    catch(err){
+        handleSequelizeError(err, next, "deleting task");
+    }
 };
 
 export {

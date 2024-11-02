@@ -1,7 +1,7 @@
 import { getJobModel } from "../../DB/Postgres/Models/Models.mjs";
 import { validate as isUuid } from 'uuid';
 import BadRequestError from "../../errors/BadError.mjs";
-import { userIDFromUserName } from "../utility/utility_functions.mjs";
+import { userIDFromUserName, handleSequelizeError } from "../utility/utility_functions.mjs";
 import { Op } from "sequelize";
 
 // controller functions
@@ -25,33 +25,27 @@ const create_job = async (req, res, next) => {
     const jobModel = getJobModel();
     const user_id = await userIDFromUserName(req.user.username);
 
-    const job = await jobModel.create({
-        company_name: company_name,
-        position: position,
-        job_status: status,
-        user_id: user_id
-    });
+    try {
+        await jobModel.create({
+            company_name: company_name,
+            position: position,
+            job_status: status,
+            user_id: user_id
+        });
 
-    if (!job) {
-        try {
-            throw new BadRequestError("Error while creating job");
-        }
-        catch (err) {
-            next(err);
-        }
-        return;
-    }
-    else {
         res.send({
             "message": "Job created successfully",
         });
+    }
+    catch (err) {
+        handleSequelizeError(err, next, "creating job");
     }
 };
 
 const get_jobs = async (req, res, next) => {
     const type = req.query.type;
 
-    if(!type){
+    if (!type) {
         try {
             throw new BadRequestError("Invalid type");
         }
@@ -64,34 +58,30 @@ const get_jobs = async (req, res, next) => {
     const jobModel = getJobModel();
     const user_id = await userIDFromUserName(req.user.username);
 
-    const jobs = await jobModel.findAll({
-        attributes: ['job_id','company_name', 'position', 'job_status'],
-        where: {
-            user_id: user_id,
-            job_status: 
-            type !== "all" ? type 
-            : {
-                [Op.not]: null
-            }
-        },
-        attributes:[
-            'job_id',
-            'company_name',
-            'position',
-            ['job_status', 'status']
-        ]
-    });
+    try{
+        const jobs = await jobModel.findAll({
+            attributes: ['job_id', 'company_name', 'position', 'job_status'],
+            where: {
+                user_id: user_id,
+                job_status:
+                    type !== "all" ? type
+                        : {
+                            [Op.not]: null
+                        }
+            },
+            attributes: [
+                'job_id',
+                'company_name',
+                'position',
+                ['job_status', 'status']
+            ]
+        });
 
-    if (!jobs) {
-        try {
-            throw new BadRequestError("Error while getting jobs");
-        }
-        catch (err) {
-            next(err);
-        }
-        return;
+        res.send(jobs);
     }
-    else res.send(jobs);
+    catch (err) {
+        handleSequelizeError(err, next, "fetching jobs");
+    } 
 };
 
 const update_job = async (req, res, next) => {
@@ -114,26 +104,20 @@ const update_job = async (req, res, next) => {
 
     const user_id = await userIDFromUserName(req.user.username);
 
-    const job = await jobModel.update(changes, {
-        where: {
-            job_id: job_id,
-            user_id: user_id
-        }
-    });
+    try{
+        await jobModel.update(changes, {
+            where: {
+                job_id: job_id,
+                user_id: user_id
+            }
+        });
 
-    if (!job) {
-        try {
-            throw new BadRequestError("Error while updating job");
-        }
-        catch (err) {
-            next(err);
-        }
-        return;
-    }
-    else {
         res.send({
             "message": "job updated successfully",
         });
+    }
+    catch (err) {
+        handleSequelizeError(err, next, "updating job");
     }
 };
 
@@ -142,7 +126,7 @@ const delete_job = async (req, res, next) => {
         job_id
     } = req.body;
 
-    if(!isUuid(job_id)) {
+    if (!isUuid(job_id)) {
         try {
             throw new BadRequestError("Invalid job id");
         }
@@ -155,26 +139,22 @@ const delete_job = async (req, res, next) => {
     const jobModel = getJobModel();
     const user_id = await userIDFromUserName(req.user.username);
 
-    const job = await jobModel.destroy({
-        where: {
-            job_id: job_id,
-            user_id: user_id
-        }
-    });
-    if (!job) {
-        try {
-            throw new BadRequestError("Error while deleting job");
-        }
-        catch (err) {
-            next(err);
-        }
-        return;
-    }
-    else {
+    try{
+        await jobModel.destroy({
+            where: {
+                job_id: job_id,
+                user_id: user_id
+            }
+        });
+
         res.send({
             "message": "Job deleted successfully",
         });
-    }   
+
+    }
+    catch(err){
+        handleSequelizeError(err, next, "deleting job");
+    }
 };
 
 export {

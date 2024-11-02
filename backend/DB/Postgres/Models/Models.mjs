@@ -1,5 +1,5 @@
 // database setup
-import { DataTypes } from 'sequelize';
+import { DataTypes, ValidationError } from 'sequelize';
 import { Postgres } from '../Config/Config.mjs';
 import bcrypt from 'bcrypt';
 
@@ -14,16 +14,31 @@ const Models = (sequelize) => {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                is: {
+                    args: /^[a-zA-Z0-9_]*$/g,
+                    msg: "Username must contain only letters, numbers and underscores!"
+                }
+            }
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                notEmpty: {
+                    args: true,
+                    msg: "Name must not be empty!"
+                }
+            }
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isEmail: true
+                isEmail: {
+                    args: true,
+                    msg: "Email must be a valid email address!"
+                }
             }
         },
         password: {
@@ -48,10 +63,22 @@ const Models = (sequelize) => {
         task_name: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                notEmpty: {
+                    args: true,
+                    msg: "Task name must not be empty!"
+                }
+            }
         },
         task_status: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                isIn: {
+                    args: [["done", "not done"]],
+                    msg: "Not a valid task status!"
+                }
+            }
         },
     },
         {
@@ -71,14 +98,32 @@ const Models = (sequelize) => {
         company_name: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                notEmpty: {
+                    args: true,
+                    msg: "Company name must not be empty!"
+                }
+            }
         },
         position: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                notEmpty: {
+                    args: true,
+                    msg: "Position must not be empty!"
+                }
+            }
         },
         job_status: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                isIn: {
+                    args: [["selected", "rejected", "interview", "preparing"]],
+                    msg: "Not a valid job status!"
+                } 
+            }
         },
     },
         {
@@ -90,8 +135,16 @@ const Models = (sequelize) => {
 
     // password hashing
     User.beforeCreate(async (user) => {
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(user.password, salt);
+        if (user.password.length < 8) {
+            throw new ValidationError('Password must be at least 8 characters long!');
+        }
+        else if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g.test(user.password) === false) {
+            throw new ValidationError('Password must contain at least one uppercase letter, one lowercase letter, one number and one special character!');
+        }
+        else {
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(user.password, salt);
+        }
     });
 
     User.hasMany(tasks, { foreignKey: 'user_id' });
