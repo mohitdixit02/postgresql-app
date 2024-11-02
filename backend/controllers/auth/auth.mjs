@@ -24,6 +24,17 @@ const login_user = async (req, res, next) => {
                 username: username,
             }
         });
+
+        if(!user){
+            try{
+                throw new UnauthorizedError("Invalid Credentials");
+            }
+            catch(err){
+                next(err);
+            }
+            return;
+        }
+
         const user_password = user.password;    
         const isMatch = await bcrypt.compare(password, user_password);
 
