@@ -260,7 +260,7 @@ export default function JobManager() {
                                                         title="Delete the task"
                                                         description="Are you sure to delete this task?"
                                                         onConfirm={() => deleteItem(item)}
-                                                        placement="topLeft"
+                                                        placement="leftTop"
                                                         okText="Yes"
                                                         cancelText="No"
                                                     >

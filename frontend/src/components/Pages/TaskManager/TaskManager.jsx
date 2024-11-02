@@ -126,7 +126,7 @@ export default function TaskManager() {
                                     title="Delete the task"
                                     description="Are you sure to delete this task?"
                                     onConfirm={() => deleteTask(item)}
-                                    placement="topLeft"
+                                    placement="leftTop"
                                     okText="Yes"
                                     cancelText="No"
                                 >
@@ -139,7 +139,8 @@ export default function TaskManager() {
                     <hr />
                     <div className={s["task_manager_input_holder"]}>
                         <div>
-                            <input type="text" placeholder="Enter Task" className="new_task_input_section" />
+                            <input type="text" placeholder="Enter Task" className="new_task_input_section" 
+                            onKeyDown={(e)=>{if(e.key === "Enter") addNewTask()}} />
                             <button onClick={addNewTask}>
                                 {loading ?
                                     <div>

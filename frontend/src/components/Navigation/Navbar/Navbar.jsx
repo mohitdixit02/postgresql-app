@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import s from "./Navbar.module.css";
-import { Button, Spin } from 'antd';
+import { Button, Spin, Popconfirm } from 'antd';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -54,13 +54,22 @@ export default function Navbar({ collapsed, setCollapsed }) {
             <div className={s["navbar_holder_right"]}>
                 {user ?
                     <Spin spinning={loading}>
-                        <Button
-                            color='danger'
-                            variant='solid'
-                            onClick={logoutFunction}
+                        <Popconfirm
+                            title="Proceed Logout?"
+                            description="We will miss you..."
+                            onConfirm={logoutFunction}
+                            align={"right"}
+                            placement="leftTop"
+                            okText="Yes"
+                            cancelText="No"
                         >
-                            Logout
-                        </Button>
+                            <Button
+                                color='danger'
+                                variant='solid'
+                            >
+                                Logout
+                            </Button>
+                        </Popconfirm>
                     </Spin>
                     :
                     <Button
