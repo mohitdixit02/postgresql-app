@@ -153,8 +153,8 @@
     }
 
     .task_manager_input_holder{
-        bottom: 20px;
-        width: calc(100% - 25px);
+        bottom: 40px;
+        width: calc(100% - 20px);
     }
     .task_manager_input_holder input{
         width: 75%;
@@ -167,7 +167,14 @@
         font-size: 12px;
     }
     .task_manager_parent hr{
-        bottom: 49px;
+        bottom: 64px;
         width: calc(100% - 25px);
+    }
+
+    .not_found_div{
+        font-size: 16px;
+    }
+    .task_manager_no_tasks{
+        font-size: 15px;
     }
 }

@@ -196,7 +196,7 @@
 
 @media screen and (max-width: 768px) {
     .job_list_container_holder{
-        padding-bottom: 40px;
+        padding-bottom: 65px;
     }
     .job_manager_parent{
         width: 95vw;
@@ -229,5 +229,12 @@
     }
     .job_list_data_item_right p{
         font-size: 13px;
+    }
+
+    .not_found_div{
+        font-size: 16px;
+    }
+    .job_list_no_jobs{
+        font-size: 15px;
     }
 }
